@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import { ValidarEmail, validarPassword } from "./validaciones";
 
 const DatosUsuario = () => {
-  const [email, setEmail] = useState({value:"harland", valid: true})
-  const [password, setPassword] = useState({value: "abc", valid: true})
+  const [email, setEmail] = useState({value:"", valid: null})
+  const [password, setPassword] = useState({value: "", valid: null})
   
 
   return (
@@ -18,7 +19,13 @@ const DatosUsuario = () => {
       }}
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(email, password)
+        if( email.valid && password.valid ){
+          console.log("Siguiente formulario")
+          console.log(email, password)
+        }else{
+          console.log("Nada")
+        }
+        
       }}
     >
       <TextField
@@ -27,11 +34,13 @@ const DatosUsuario = () => {
         fullWidth
         margin="dense"
         type="email"
-        error={false}
-        helperText={false && "Ingresa un correo electrónico válido"}
+        error={email.valid === false}
+        helperText={email.valid === false && "Ingresa un correo electrónico válido"}
         value={email.value}
         onChange={(input) => {
-          setEmail({ value: input.target.value, valid: true })
+          const email = input.target.value
+          const valido = ValidarEmail(email);
+          setEmail({ value: email, valid: valido });
         }}
       />
       <TextField
@@ -40,9 +49,13 @@ const DatosUsuario = () => {
         fullWidth
         margin="dense"
         type="password"
+        error={password.valid === false}
+        helperText={password.valid === false && "Ingresa una contraseña valida"}
         value={password.value}
         onChange={(input) => {
-          setPassword({ value: input.target.value, valid: true })
+          const password = input.target.value
+          
+          setPassword({ value: password, valid: validarPassword(password) })
         }}
       />
       <Button variant="contained" type="submit">
