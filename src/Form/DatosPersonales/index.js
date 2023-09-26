@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
-import { validarNombre, validarApellidos, validarTelefono } from "./validaciones";
+import {
+  validarNombre,
+  validarApellidos,
+  validarTelefono,
+} from "./validaciones";
 
 const DatosPersonales = ({ updateStep }) => {
-
-  const [name, setName] = useState({ value: '', valid: null })
-  const [lastName, setlastName] = useState({ value: '', valid: null })
-  const [phone, setPhone] = useState({ value: '', valid: null })
+  const [name, setName] = useState({ value: "", valid: null });
+  const [lastName, setLastName] = useState({ value: "", valid: null });
+  const [phone, setPhone] = useState({ value: "", valid: null });
 
   return (
     <Box
@@ -21,7 +24,6 @@ const DatosPersonales = ({ updateStep }) => {
       onSubmit={(e) => {
         e.preventDefault();
         updateStep(2);
-
       }}
     >
       <TextField
@@ -35,10 +37,13 @@ const DatosPersonales = ({ updateStep }) => {
           const value = input.target.value;
           const valid = validarNombre(value);
           setName({ value, valid });
-          console.log(value,valid);
+          console.log(value, valid);
         }}
         error={name.valid === false}
-        helperText={name.valid === false && "Ingresa un nombre válido"}
+        helperText={
+          name.valid === false &&
+          "Ingresa al menos 2 caracteres y máximo 30 caracteres."
+        }
       />
       <TextField
         label="Apellidos"
@@ -50,11 +55,14 @@ const DatosPersonales = ({ updateStep }) => {
         onChange={(input) => {
           const value = input.target.value;
           const valid = validarApellidos(value);
-          setlastName({ value, valid });
-          console.log(value,valid);
+          setLastName({ value, valid });
+          console.log(value, valid);
         }}
         error={lastName.valid === false}
-        helperText={lastName.valid === false && "Ingresa un apellido válido"}
+        helperText={
+          lastName.valid === false &&
+          "Ingresa al menos 2 caracteres y máximo 50 caracteres."
+        }
       />
       <TextField
         label="Número telefónico"
@@ -68,10 +76,13 @@ const DatosPersonales = ({ updateStep }) => {
           const value = input.target.value;
           const valid = validarTelefono(value);
           setPhone({ value, valid });
-          console.log(value,valid);
+          console.log(value, valid);
         }}
         error={phone.valid === false}
-        helperText={phone.valid === false && "Ingresa un telefono válido"}
+        helperText={
+          phone.valid === false &&
+          "Ingresa al menos 8 digitos y máximo 14 digitos."
+        }
       />
       <Button variant="contained" type="submit">
         Siguiente

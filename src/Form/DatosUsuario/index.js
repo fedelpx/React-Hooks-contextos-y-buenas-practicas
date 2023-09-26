@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
-import { ValidarEmail, validarPassword } from "./validaciones";
+import { validarEmail, validarPassword } from "./validaciones";
 
-const DatosUsuario = ({updateStep}) => {
-  const [email, setEmail] = useState({value:"", valid: null})
-  const [password, setPassword] = useState({value: "", valid: null})
-  
+const DatosUsuario = ({ updateStep }) => {
+  const [email, setEmail] = useState({
+    value: "",
+    valid: null,
+  });
+  const [password, setPassword] = useState({ value: "", valid: null });
 
   return (
     <Box
@@ -19,14 +21,13 @@ const DatosUsuario = ({updateStep}) => {
       }}
       onSubmit={(e) => {
         e.preventDefault();
-        if( email.valid && password.valid ){
-          console.log("Siguiente formulario")
+        if (email.valid && password.valid) {
+          console.log("Siguiente formulario");
           console.log(email, password);
           updateStep(1);
-        }else{
-          console.log("Nada")
+        } else {
+          console.log("No hacer nada");
         }
-        
       }}
     >
       <TextField
@@ -36,11 +37,13 @@ const DatosUsuario = ({updateStep}) => {
         margin="dense"
         type="email"
         error={email.valid === false}
-        helperText={email.valid === false && "Ingresa un correo electrónico válido"}
+        helperText={
+          email.valid === false && "Ingresa un correo electrónico válido."
+        }
         value={email.value}
         onChange={(input) => {
-          const email = input.target.value
-          const valido = ValidarEmail(email);
+          const email = input.target.value;
+          const valido = validarEmail(email);
           setEmail({ value: email, valid: valido });
         }}
       />
@@ -51,12 +54,14 @@ const DatosUsuario = ({updateStep}) => {
         margin="dense"
         type="password"
         error={password.valid === false}
-        helperText={password.valid === false && "Ingresa una contraseña valida"}
+        helperText={
+          password.valid === false &&
+          "Ingresa una contraseña válida, Al menos 8 caracteres y máximo 20."
+        }
         value={password.value}
         onChange={(input) => {
-          const password = input.target.value
-          
-          setPassword({ value: password, valid: validarPassword(password) })
+          const password = input.target.value;
+          setPassword({ value: password, valid: validarPassword(password) });
         }}
       />
       <Button variant="contained" type="submit">
@@ -64,7 +69,6 @@ const DatosUsuario = ({updateStep}) => {
       </Button>
     </Box>
   );
-
-}
+};
 
 export default DatosUsuario;
